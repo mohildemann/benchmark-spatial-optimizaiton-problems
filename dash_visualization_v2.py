@@ -26,9 +26,9 @@ class Solution:
         self.representation = representation
         self.objective_values = objective_values
 
-app = JupyterDash(__name__)
-app.title = "Title to be defined"
-server = app.server
+dash_app = JupyterDash(__name__)
+dash_app.title = "Title to be defined"
+server = dash_app.server
 
 def blank_figure():
     fig = go.Figure(go.Scatter(x=[], y=[]))
@@ -38,7 +38,7 @@ def blank_figure():
     return fig
 
 def create_layout():
-    # Actual layout of the app
+    # Actual layout of the dash_app
     return html.Div(
         id="root",
         children=[
@@ -53,7 +53,7 @@ def create_layout():
                 ],
             ),
             html.Div(
-                id="app-container",
+                id="dash_app-container",
                 children=[
                     html.Div(
                         id="left-column",
@@ -132,7 +132,7 @@ def create_layout():
         ],
     )
 
-def interactiveParetoFront(app, problems, save_front = None):
+def interactiveParetoFront(dash_app, problems, save_front = None):
 
     def generate_figure_image(figure, points,layout, opacity):
         figure.add_trace(go.Scatter(
@@ -157,7 +157,7 @@ def interactiveParetoFront(app, problems, save_front = None):
             legend={'itemsizing': 'constant'})
 
         return figure
-    @app.callback(
+    @dash_app.callback(
         Output("pareto_front", "figure"),
         [Input("study_area-dropdown", "value"),]
     )
@@ -221,7 +221,7 @@ def interactiveParetoFront(app, problems, save_front = None):
                             height=(height_cm * 2.54) * ppi)
         return figure
 
-    @app.callback(
+    @dash_app.callback(
         Output("selected_data", "figure"),
         [
             Input("pareto_front", "clickData"),
@@ -271,7 +271,7 @@ def interactiveParetoFront(app, problems, save_front = None):
                             problem.plot_layout
                         )
 
-                    # add the background app if given as input.
+                    # add the background dash_app if given as input.
                     # This could be the extent of the study area
                     if problem.plot_background_trace is not None:
                         fig.add_trace(problem.plot_background_trace)
@@ -288,8 +288,8 @@ def interactiveParetoFront(app, problems, save_front = None):
                 pass
         return {}
 
-# inititalize the app
-# app = dash.Dash(
+# inititalize the dash_app
+# dash_app = dash.Dash(
 #     __name__,
 #     meta_tags=[
 #         {"name": "viewport", "content": "width=device-width, initial-scale=1.0"}
@@ -297,8 +297,8 @@ def interactiveParetoFront(app, problems, save_front = None):
 # )
 
 #create the layout
-app.layout = create_layout()
-
+dash_app.layout = create_layout()
+app = dash_app.server
 ## problem 1
 
 #define location of output directory with pareto fronts and required input data for visualizations
@@ -381,5 +381,5 @@ comola_problem = Problem(
 
 problems = [swc_allocation_problem, comola_problem]
 
-interactiveParetoFront(app, problems)
-app.run_server(mode='jupyterlab')
+interactiveParetoFront(dash_app, problems)
+dash_app.run_server(mode='jupyterlab')
