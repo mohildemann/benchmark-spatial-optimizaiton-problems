@@ -1,1 +1,1 @@
-# benchmark-spatial-optimizaiton-problems
+# benchmark-spatial-optimization-problems
