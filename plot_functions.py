@@ -5,8 +5,7 @@ import json
 import pickle
 
 def plot_selected_watersheds(clicked_solution):
-    outputdir = r"C:\Users\morit\OneDrive - Universität Münster\PhD\Kooperation_GIZ\Data\Optimization_Gumobila\optimization_result"
-    with open(os.path.join(outputdir, 'watersheds4326.geojson')) as watersheds_json_file:
+    with open(os.path.join("data", 'watersheds4326.geojson')) as watersheds_json_file:
         watersheds = json.load(watersheds_json_file)
     ws_lons = []
     ws_lats = []
@@ -39,8 +38,7 @@ def plot_selected_watersheds(clicked_solution):
     return trace
 
 def plot_selected_contourlines(clicked_solution):
-    outputdir = r"C:\Users\morit\OneDrive - Universität Münster\PhD\Kooperation_GIZ\Data\Optimization_Gumobila\optimization_result"
-    with open(os.path.join(outputdir,'contourlines4326.geojson')) as terraces_json_file:
+    with open(os.path.join("data",'contourlines4326.geojson')) as terraces_json_file:
         terraces = json.load(terraces_json_file)
     cl_lons = []
     cl_lats = []
@@ -122,7 +120,7 @@ def plot_selected_landuse_map(clicked_solution):
         reversed_lum = np.flip(np.array(landuseraster), axis=0)
         return reversed_lum
 
-    with open(r"C:\Users\morit\OneDrive - Universität Münster\PhD\Lecture_SpatialOptimization\patch_map.pkl",
+    with open(r"data\patch_map.pkl",
               'rb') as output:
         patch_map = pickle.load(output)
 
