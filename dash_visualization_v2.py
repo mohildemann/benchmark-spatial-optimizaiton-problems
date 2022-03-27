@@ -302,13 +302,12 @@ app = dash_app.server
 ## problem 1
 
 #define location of output directory with pareto fronts and required input data for visualizations
-outputdir = r"C:\Users\morit\OneDrive - Universität Münster\PhD\Kooperation_GIZ\Data\Optimization_Gumobila\optimization_result"
 filename = 'all_gens_gumobila_200_gens_100_popsize_fixed_index.pkl'
 
-with open(os.path.join(outputdir,"pareto_fronts", filename), 'rb') as handle:
+with open(os.path.join("data", filename), 'rb') as handle:
         populations = pickle.load(handle)
 
-with open(os.path.join(outputdir,'watersheds4326.geojson')) as watersheds_json_file:
+with open(os.path.join("data",'watersheds4326.geojson')) as watersheds_json_file:
     watersheds = json.load(watersheds_json_file)
 
 # get the final generation and convert to class solution
@@ -351,7 +350,7 @@ swc_allocation_problem = Problem(
     plot_function_additional_trace= plot_selected_contourlines)
 
 # #problem 2
-with open(r"C:\Users\morit\OneDrive - Universität Münster\PhD\Lecture_SpatialOptimization\pareto_front.pkl", 'rb') as output:
+with open(r"data\pareto_front.pkl", 'rb') as output:
     pf_comola = pickle.load(output)
 optimal_solutions_comola = []
 for i in range(len(pf_comola[2])):
